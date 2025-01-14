@@ -14,6 +14,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from cuml.metrics import r2_score, mean_squared_error, accuracy_score
 from cuml.common.device_selection import using_device_type
+from joblib import parallel_backend
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description="Train ML models for molecular property prediction")
@@ -84,13 +85,19 @@ if __name__ == "__main__":
 	)
 
 	# scaler = CustomStandardScaler()
-	scaler = StandardScalerWithResizing("truncated_expansion")
+	# scaler = StandardScalerWithResizing()
+	scaler = StandardScaler()
 	scaler.fit(X_train)
 	X_train_scaled = scaler.transform(X_train)
+	print(X_train_scaled.shape)
 
 	logging.info(f"Training {args.model} model...")
 	model = get_model(model_config, args.random_state)
-	model.fit(X_train_scaled, y_train)
+	if args.model.split("_")[-1] == "sk":
+		with parallel_backend('threading', n_jobs=12):
+			model.fit(X_train_scaled, y_train)
+	else:
+		model.fit(X_train_scaled, y_train)
 
 	r2, rmse, acc = validate_model(model, scaler, X_test, y_test)
 
@@ -99,4 +106,5 @@ if __name__ == "__main__":
 	logging.info(f"RMSE: {rmse:.4f} eV")
 	logging.info(f"Accuracy: {acc:.4f}")
 
-	save_model(model, scaler, descriptor, args.model, args.descriptor, scaler.resizing_technique)
+	# save_model(model, scaler, descriptor, args.model, args.descriptor, scaler.resizing_technique + "_outer")
+	save_model(model, scaler, descriptor, args.model, args.descriptor, "_inner")

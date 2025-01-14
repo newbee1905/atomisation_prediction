@@ -57,7 +57,7 @@ class StandardScalerWithResizing(CustomStandardScaler):
 		if resizing_technique == "padding_with_zeros":
 			max_size = max(arr.shape[0] for arr in X)
 
-			X_padded = np.array([
+			resized_data = np.array([
 				np.pad(
 					arr,
 					((0, max_size - arr.shape[0]), (0, 0)),
@@ -65,20 +65,18 @@ class StandardScalerWithResizing(CustomStandardScaler):
 				) for arr in X
 			])
 
-			return X_padded
-
 		elif resizing_technique == "truncated_expansion":
-			X_resized = np.array([
+			resized_data = np.array([
 				arr[:target_resize] if arr.shape[0] > target_resize else np.pad(
 					arr, ((0, target_resize - arr.shape[0]), (0, 0)), mode="constant"
 				) for arr in X
 			])
-			return X_resized
 
+			return resized_data
 		else:
 			raise NotImplementedError(f"Resizing technique '{self.resizing_technique}' is not implemented.")
 
-		return np.array(resized_data)
+		return resized_data.reshape(resized_data.shape[0], -1)
 
 	def fit(self, X: np.ndarray, y=None):
 		target_shape = X.shape[-1]

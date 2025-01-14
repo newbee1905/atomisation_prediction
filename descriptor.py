@@ -19,7 +19,8 @@ descriptor_configs = {
 		"l_max": 6,
 		"sigma": 0.3,
 		"periodic": False,
-		"sparse": False
+		"sparse": False,
+		"average": "inner",
 	}),
 	"acsf": DescriptorConfig("acsf", {
 		"r_cut": 6.0,

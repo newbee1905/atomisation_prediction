@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from cuml.ensemble import RandomForestRegressor
 from cuml.linear_model import Ridge, Lasso
+from sklearn.ensemble import RandomForestRegressor as RandomForestRegressorSK
+from sklearn.linear_model import Ridge as RidgeSK, Lasso as LassoSK
 from cuml.svm import SVR
 from typing import List, Dict, Any,  Optional
 from sklearn.preprocessing import StandardScaler
@@ -18,17 +20,22 @@ model_configs = {
 		"n_estimators": 100,
 		"max_depth": 15,
 	}),
+	"random_forest_sk": ModelConfig("random_forest_sk", {
+		"n_estimators": 100,
+		"max_depth": 15,
+	}),
 	"ridge": ModelConfig("ridge", {
 		"alpha": 1.0,
 	}),
 	"lasso": ModelConfig("lasso", {
 		"alpha": 1.0,
 	}),
-	"svr": ModelConfig("svr", {
-		"kernel": "rbf",
-		"C": 1.0,
-		"epsilon": 0.1
-	})
+	"ridge_sk": ModelConfig("ridge_sk", {
+		"alpha": 1.0,
+	}),
+	"lasso_sk": ModelConfig("lasso_sk", {
+		"alpha": 1.0,
+	}),
 }
 
 def get_model(config: ModelConfig, random_state: float):
@@ -36,7 +43,9 @@ def get_model(config: ModelConfig, random_state: float):
 		"random_forest": RandomForestRegressor,
 		"ridge": Ridge,
 		"lasso": Lasso,
-		"svr": SVR
+		"random_forest_sk": RandomForestRegressorSK,
+		"ridge_sk": RidgeSK,
+		"lasso_sk": LassoSK,
 	}
 
 	if config.name not in models:
