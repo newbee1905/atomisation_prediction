@@ -11,5 +11,6 @@ wheels/
 
 models/*.pickle
 *.pickle
+*.pth
 *.zip
 MoleculesBig/

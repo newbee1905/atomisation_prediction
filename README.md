@@ -12,6 +12,7 @@
 
 |    | name                                     |           r2 |     rmse |   acc |
 |---:|:-----------------------------------------|-------------:|---------:|------:|
+|    | Feed Forward Model SOAP Avg              |              | 0.286    |       |
 | 33 | random_forest_sk_soap_padding_with_zeros |  0.367954    | 0.295038 | 0.763 |
 |  6 | random_forest_ewald_sum                  |  0.206219    | 0.330639 | 0.734 |
 |  3 | random_forest_sine                       |  0.189943    | 0.334012 | 0.742 |
@@ -21,7 +22,9 @@
 |  1 | ridge_coulomb                            |  0.0799973   | 0.355958 | 0.72  |
 |  7 | ridge_ewald_sum                          |  0.0748135   | 0.356959 | 0.72  |
 |  4 | ridge_sine                               |  0.0252319   | 0.366399 | 0.721 |
+|    | CNN Model SOAP Padding                   |              | 0.370    |       |
 | 18 | ridge_soap_truncated_expansion           |  0.00315834  | 0.370525 | 0.706 |
+|    | Feed Forward Model SOAP Padding Merge    |              | 0.371    |       |
 |  8 | lasso_ewald_sum                          | -2.54299e-05 | 0.371116 | 0.706 |
 | 25 | ridge_mbtr_truncated_expansion           | -2.54299e-05 | 0.371116 | 0.706 |
 | 21 | lasso_acsf_truncated_expansion           | -2.54299e-05 | 0.371116 | 0.706 |
